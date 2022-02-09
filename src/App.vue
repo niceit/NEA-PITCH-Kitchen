@@ -8,7 +8,6 @@
         </div>
         <div id="page">
             <div id="content">
-                <CartWrapper/>
                 <router-view></router-view>
             </div>
         </div>
