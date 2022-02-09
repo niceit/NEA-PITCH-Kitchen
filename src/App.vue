@@ -7,10 +7,7 @@
             </div>
         </div>
         <div id="page">
-            <Header v-if="$route.meta.showHeader"/>
             <div id="content">
-                <TopComponents v-if="$route.meta.showHeader"/>
-                <CartWrapper/>
                 <router-view></router-view>
             </div>
         </div>
@@ -18,18 +15,12 @@
 </template>
 
 <script>
-import Header from '@/components/commons/Header'
 import { Circle2 } from 'vue-loading-spinner'
-import TopComponents from '@/components/commons/TopComponents'
-import CartWrapper from '@/components/commons/CartWrapper'
 
 export default {
     name: 'App',
     components: {
-        TopComponents,
-        Header,
-        Circle2,
-        CartWrapper
+        Circle2
     }
 
 }
