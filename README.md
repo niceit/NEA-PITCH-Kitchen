@@ -1,4 +1,4 @@
-# otlop-webapp
+# NEA Pitch Kitchen
 
 ## Project setup
 ```
