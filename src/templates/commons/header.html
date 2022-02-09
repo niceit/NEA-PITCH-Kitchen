@@ -1,0 +1,51 @@
+<header id="header">
+
+    <div class="container">
+
+        <div class="d-flex">
+            <a class="logotype" href="index.html"><img src="@/assets/images/logotype.svg" alt="OTLOP"></a>
+
+            <nav class="navbar d-flex navbar-expand-lg navbar-light">
+                <button class="navbar-toggler navbar-toggle" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li class="cart">
+                            <a href="#">Cart</a>
+                        </li>
+                        <li class="fav">
+                            <a href="#">Favourite</a>
+                        </li>
+                        <li class="prof">
+                            <a href="/profile">Profile</a>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="links mr-auto">
+                    <div class="form-area d-inline-block mr-4 city-picker">
+                        <div class="form-row select-row">
+                            <select class="form-control" v-model="citySelected">
+                                <option v-for="city in cities" :value="city.Id" v-text="city.Name"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <a href="#" class="notific"><span>2</span></a>
+                    <a href="javascript:void(0);" class="lang-icon" v></a>
+                </div>
+
+            </nav>
+
+
+        </div>
+
+    </div>
+</header>

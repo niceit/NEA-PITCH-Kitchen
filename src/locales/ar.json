@@ -1,0 +1,149 @@
+{
+  "common": {
+    "ok": "نعم",
+    "cancel": "لا",
+    "search": "بحث"
+  },
+  "language": {
+    "en": "English",
+    "he": "עִברִית",
+    "ar": "عربي"
+  },
+  "topNav": {
+    "home": "الصفحة الرئيسية",
+    "cart": "عربة التسوق",
+    "favorite": "المفضل",
+    "profile": "الملف الشخصي",
+    "searchPlaceholder": "أطباق أو مطاعم أو مطابخ"
+  },
+  "notifications": {
+    "title": "الاشعارات",
+    "new": "اشعارات جديدة",
+    "old": "اشعارات سابقة"
+  },
+  "menu": {
+    "hi": "مرحبا",
+    "personalArea": "حسابي",
+    "city": "اختر البلد",
+    "about": "عن Otlop",
+    "contactUs": "تواصل معنا",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الاستعمال",
+    "deliveryItems": "شروط التوصيل",
+    "share": "شارك التطبيق",
+    "download": "تحميل Otlop",
+    "logout": "خروج",
+    "confirmLogout": "وين يا مسهل؟ خليك معنا",
+    "languageTitle": "غير اللغة"
+  },
+  "profile": {
+    "title": "حسابي",
+    "subTitle": "معلوماتي الشخصية",
+    "update": "تغيير"
+  },
+  "registerScreen": {
+    "fullName": "الاسم",
+    "address": "العنوان",
+    "phoneNumber": "رقم الهاتف",
+    "shippingAddress": "عنوان التوصيل",
+    "addressTitle": "الشارع",
+    "city": "البلد",
+    "floor": "رقم الطابق",
+    "apartmentNumber": "رقم البيت",
+    "register": "تسجيل",
+    "email": "الايميل",
+    "error": {
+      "fullName": "الرجاء إدخال الاسم الكامل",
+      "address": "الرجاء إدخال العنوان",
+      "email": "الرجاء إدخال البريد الإلكتروني"
+    }
+  },
+  "login": {
+    "enterPhoneNumber": "سجل رقم التلفون",
+    "verifyCode": "كمل",
+    "phoneNumber": "رقم التلفون",
+    "enterVerifyCode": "حط الرقم اللي وصلك",
+    "resend": "موصلش؟؟اكبس هون",
+    "phoneNumberPlaceholder": "رقم الهاتف"
+  },
+  "restaurants": {
+    "list": {
+      "title": "مطاعم",
+      "recommended": "محبوب"
+    }
+  },
+  "restaurant": {
+    "minOrder": "الحد الادنى للطلب₪{minOrder}",
+    "deliveryFee": "سعر التوصيل ₪{deliveryFee}",
+    "freeShip": "التوصيل مجاني",
+    "close": "مغلق",
+    "workingHour": "ساعات العمل: {hour}",
+    "cart": "لسلة المشتريات (₪{price})",
+    "category": "الفئات",
+    "makePayment": "انتقل إلى الدفع ({total}₪)",
+    "continueShopping": "مواصلة التسوق",
+    "noCategory": "لا يوجد عنصر في المطعم"
+  },
+  "home": {
+    "percent": "{percent}%-"
+  },
+  "dish": {
+    "variantAmount": "اخترت {amount}",
+    "variantTitle": "اضافات",
+    "drinkTitle": "مشروبات",
+    "addToCart": "ضيف بالسلة ({price})",
+    "noDrink": "نسيت المشروب؟",
+    "price": "₪{price}",
+    "addToCartSuccess": "إضافة السلعة الى سلة التسوق الخاصة بك",
+    "optionsTitle": "اشر على الخيارات",
+    "emptyOptionError": "الرجاء تحديد الخيار."
+  },
+  "payment": {
+    "summary": "ملخص",
+    "couponNumber": "رقم الكوبون",
+    "continue": "يكمل"
+  },
+  "orderSummary": {
+    "title": "الدفع",
+    "payment": "المجموع",
+    "paymentMethod": "طريقة الدفع",
+    "credit": "فيزا",
+    "note": "رسالتك للسائق أو للمطعم",
+    "pickup": "استلام بالمطعم",
+    "delivery": "التوصيل",
+    "deliveryFee": "رسوم التوصيل",
+    "continue": "ادفع",
+    "deliveryPrice": "سعر التوصيل",
+    "coupon": "رقم الكوبون",
+    "total": "المبلغ الكلي",
+    "invalidCoupon": "رقم الكوبون خالص تاريخه",
+    "totalOrder": "سعر الطلبية",
+    "cash": "نقدي",
+    "location_disabled_title": "تعذر الحصول على موقعك الحالي",
+    "location_disabled_msg": "اسمحلنا باستخدام موقعك الحالي",
+    "location_disabled_open_setting_btn": "افتح الاعدادات",
+    "open_setting_failed": "تعذر فتح الإعدادات",
+    "choose_payment_method": "لازم تختار طريقة الدفع!",
+    "choose_delivery": "لازم تختار طريقة التوصيل!"
+  },
+  "orders": {
+    "detail": "طلبي",
+    "history": "طلباتي السابقة",
+    "extra": "اضافات:",
+    "title": "طلباتي",
+    "bookAgain": "اطلب كمان مرة",
+    "conflict": "سلتك فيها اغراض من مطعم ثاني",
+    "conflictTitle": "مش زابط",
+    "minOrderTitle": "مش زابط",
+    "minOrder": "طلب الحد الادنى هو {min} شيكل",
+    "ok": "طيب",
+    "blockUser": "المستخدم محظور",
+    "confirmTitle": "",
+    "confirmMessage": "تأكيد الدفع"
+  },
+  "dialog": {
+    "remove_confirmation": "هل تريد مسح العربة؟",
+    "removed": "تمت إزالة عربة التسوق الخاصة بك.",
+    "clear_cart_confirmation": "هل تريد مسح العربة؟"
+  }
+}

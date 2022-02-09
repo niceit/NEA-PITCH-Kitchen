@@ -1,0 +1,150 @@
+{
+  "common": {
+    "ok": "OK!",
+    "cancel": "Cancel",
+    "search": "Search"
+  },
+  "language": {
+    "en": "English",
+    "he": "עִברִית",
+    "ar": "عربي"
+  },
+  "topNav": {
+    "home": "Home",
+    "cart": "Cart",
+    "favorite": "Favourite",
+    "profile": "Profile",
+    "searchPlaceholder": "Dishes, Restaurants or cuisines"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "new": "New notifications",
+    "old": "Old notifications"
+  },
+  "menu": {
+    "hi": "Hello",
+    "personalArea": "Personal area",
+    "city": "Select city",
+    "about": "About Otlop",
+    "contactUs": "Contact Us",
+    "privacy": "Privacy policy",
+    "terms": "Terms of use",
+    "deliveryItems": "Delivery Items",
+    "share": "Share the app",
+    "download": "Download Otlop",
+    "logout": "Logout",
+    "confirmLogout": "Are you sure you want to logout?",
+    "languageTitle": "Switch Language"
+  },
+  "profile": {
+    "title": "Profile info",
+    "subTitle": "Profile details",
+    "update": "Update"
+  },
+  "registerScreen": {
+    "fullName": "Full Name",
+    "address": "Address",
+    "phoneNumber": "Phone Number",
+    "email": "Email",
+    "shippingAddress": "Shipping Address",
+    "addressTitle": "Address",
+    "city": "City",
+    "floor": "Floor",
+    "apartmentNumber": "Apartment Number",
+    "register": "Register",
+    "error": {
+      "fullName": "Please enter full name",
+      "address": "Please enter Address",
+      "email": "Please enter Email"
+    }
+  },
+  "login": {
+    "enterPhoneNumber": "Enter phone number",
+    "verifyCode": "Send me a verification code",
+    "phoneNumber": "Phone number",
+    "enterVerifyCode": "Enter verification code",
+    "resend": "Didn’t receive code? Send again",
+    "phoneNumberPlaceholder": "Phone Number"
+  },
+  "restaurants": {
+    "list": {
+      "title": "Restaurants",
+      "recommended": "Recommended"
+    }
+  },
+  "restaurant": {
+    "minOrder": "Min order {minOrder}₪",
+    "deliveryFee": "Delivery fee {deliveryFee}₪",
+    "freeShip": "Freeship",
+    "close": "Restaurant now closed",
+    "workingHour": "Open {hour}",
+    "cart": "Checkout ({price}₪)",
+    "category": "Categories",
+    "makePayment": "Go to Payment ({total}₪)",
+    "continueShopping": "Continue Shopping",
+    "noCategory": "Restaurant has no item"
+  },
+  "home": {
+    "percent": "{percent}%-"
+  },
+  "dish": {
+    "variantAmount": "{amount} Selected",
+    "variantTitle": "Select Extensions",
+    "drinkTitle": "Select Beverages",
+    "addToCart": "Add to Order {price}",
+    "noDrink": "A drink has not yet been selected",
+    "price": "{price}₪",
+    "addToCartSuccess": "Item added to your cart",
+    "optionsTitle": "Select Options",
+    "emptyOptionError": "Please select option."
+  },
+  "payment": {
+    "summary": "Summary",
+    "couponNumber": "Coupon Number",
+    "continue": "Continue"
+  },
+  "orderSummary": {
+    "title": "Payment",
+    "payment": "Summary",
+    "paymentMethod": "Payment method",
+    "credit": "Credit Card",
+    "note": "Notes for delivery",
+    "pickup": "Pick up",
+    "delivery": "Delivery",
+    "deliveryFee": "Delivery Fee",
+    "continue": "Continue",
+    "deliveryPrice": "Delivery",
+    "coupon": "Coupon number",
+    "total": "Total payment",
+    "invalidCoupon": "Invalid coupon",
+    "totalOrder": "Order total",
+    "cash": "Cash",
+    "location_disabled_title": "Location disabled",
+    "location_disabled_msg": "You must enable location in order to place order!",
+    "location_disabled_open_setting_btn": "Open settings",
+    "open_setting_failed": "Unable to open settings",
+    "choose_payment_method": "Please choose payment method",
+    "choose_delivery": "Please choose delivery type."
+  },
+  "orders": {
+    "detail": "Order summary",
+    "history": "Order history",
+    "extra": "Extras:",
+    "title": "My order",
+    "bookAgain": "Book again",
+    "conflict": "You can't re-order items of another restaurant",
+    "conflictTitle": "Cart is not empty",
+    "minOrderTitle": "Checkout Error",
+    "minOrder": "Minimum order is {min} NIS",
+    "ok": "OK",
+    "blockUser": "User is blocked",
+    "confirmTitle": "Confirm",
+    "confirmMessage": "Are you sure you want to continue?",
+    "warningCartEmpty": "Your cart is empty"
+  },
+  "dialog": {
+    "remove_confirmation": "Do you want to clear the cart?",
+    "removed": "Your cart had been removed.",
+    "clear_cart_confirmation": "Do you want to clear the cart?"
+  }
+}

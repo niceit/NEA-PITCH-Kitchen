@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="d-md-flex">
+        <div class="sidebar">
+            <div class="bg-box pt-3">
+                <h4 v-if="userData" v-text="$t('menu.hi') + ' ' + userData['first_name'] + ' ' + userData['last_name']"></h4>
+                <ul>
+                    <li><a href="/profile" v-text="$t('menu.personalArea')"></a></li>
+                    <li><a href="javascript:void(0)" @click="changeAppLanguage" v-text="$t('menu.languageTitle')"></a></li>
+<!--                    <li><a href="#" v-text="$t('menu.city')"></a></li>-->
+                    <li><a :href="configs.value('aboutUsUrl')" target="_blank" v-text="$t('menu.about')"></a></li>
+                    <li><a :href="configs.value('contactUsUrl')" target="_blank" v-text="$t('menu.contactUs')"></a></li>
+                    <li><a :href="configs.value('privacyUrl')" target="_blank" v-text="$t('menu.privacy')"></a></li>
+                    <li><a :href="configs.value('termAndConditionUrl')" target="_blank" v-text="$t('menu.terms')"></a></li>
+                    <li><a href="#" v-text="$t('menu.deliveryItems')"></a></li>
+                    <li class="active"><a href="#" v-text="$t('menu.share')"></a></li>
+                    <li v-if="appLocalStorage.getUserToken()"><a href="javascript:void(0)" @click="logout" v-text="$t('menu.logout')"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="pic" v-if="banner" @click="goToRestaurantStore(banner['store_id'])">
+                <img :src="banner['banner_image']" alt="">
+            </div>
+            <div class="images">
+                <h3>&nbsp;</h3>
+                <div class="row">
+                    <div v-if="categories.length" v-for="category in categories" class="col-lg-4 col-md-6 col-sm-6 col-12">
+                        <div class="pic">
+                            <a href="javascript:;" @click="goToRestaurantList(category['category_id'])">
+                                <img :src="category['image']" alt="">
+                            </a>
+                            <p class="name-category" v-text="category['name']"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

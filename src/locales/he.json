@@ -1,0 +1,149 @@
+{
+  "common": {
+    "ok": "בסדר",
+    "cancel": "לבטל",
+    "search": "לחפש"
+  },
+  "language": {
+    "en": "English",
+    "he": "עִברִית",
+    "ar": "عربي"
+  },
+  "topNav": {
+    "home": "בית",
+    "cart": "עגלת קניות",
+    "favorite": "מועדפים",
+    "profile": "פּרוֹפִיל",
+    "searchPlaceholder": "מנות, מסעדות או מטבחים"
+  },
+  "notifications": {
+    "title": "התראות",
+    "new": "התראות חדשות",
+    "old": "התראות קודמות"
+  },
+  "menu": {
+    "hi": "שלום",
+    "personalArea": "איזור אישי",
+    "city": "בחירת יישוב",
+    "about": "אודות Otlop",
+    "contactUs": "יצירת קשר",
+    "privacy": "מדיניות פרטיות",
+    "terms": "תנאי שימוש",
+    "deliveryItems": "תקנון משלוחים",
+    "share": "שתפו את האפליקציה",
+    "download": "הורד את Otlop",
+    "logout": "התנתקות",
+    "confirmLogout": "בטוחים שברצונכם להתנתק?",
+    "languageTitle": "החלף שפה"
+  },
+  "profile": {
+    "title": "איזור אישי",
+    "subTitle": "פרטים אישיים",
+    "update": "עדכון"
+  },
+  "registerScreen": {
+    "fullName": "שם מלא",
+    "address": "כתובת",
+    "phoneNumber": "מספר טלפון נייד",
+    "shippingAddress": "כתובת למשלוח",
+    "addressTitle": "רחוב ומס' בית",
+    "city": "עיר",
+    "floor": "קומה",
+    "apartmentNumber": "מס' דירה",
+    "register": "הרשמה",
+    "email": "אימייל",
+    "error": {
+      "fullName": "נא להזין שם מלא",
+      "address": "נא להזין כתובת",
+      "email": "נא להזין אימייל"
+    }
+  },
+  "login": {
+    "enterPhoneNumber": "הזינו מספר טלפון",
+    "verifyCode": "שלחו לי קוד אימות",
+    "phoneNumber": "מספר טלפון",
+    "enterVerifyCode": "הזינו את קוד האימות",
+    "resend": "לא קיבלת קוד? לחץ כאן",
+    "phoneNumberPlaceholder": "מספר טלפון"
+  },
+  "restaurants": {
+    "list": {
+      "title": "מסעדות",
+      "recommended": "מומלץ"
+    }
+  },
+  "restaurant": {
+    "minOrder": "מינ' הזמנה ₪{minOrder}",
+    "deliveryFee": "דמי משלוח ₪{deliveryFee}",
+    "freeShip": "משלוח חינם",
+    "close": "המסעדה סגורה כעת",
+    "workingHour": "שעות פתיחה: {hour}",
+    "cart": "לעגלת הקניות (₪{price})",
+    "category": "קטגוריות",
+    "makePayment": "עבור אל תשלום ({total}₪)",
+    "continueShopping": "המשך בקניות",
+    "noCategory": "למסעדה אין פריט"
+  },
+  "home": {
+    "percent": "{percent}%-"
+  },
+  "dish": {
+    "variantAmount": "נבחרו {amount}",
+    "variantTitle": "בחרו תוספות",
+    "drinkTitle": "בחרו שתיה",
+    "addToCart": "הוסף לעגלה ({price})",
+    "noDrink": "טרם נבחרה שתיה",
+    "price": "₪{price}",
+    "addToCartSuccess": "פריט נוסף לעגלת הקניות שלך",
+    "optionsTitle": "בחר אופציות",
+    "emptyOptionError": "אנא בחר באפשרות."
+  },
+  "payment": {
+    "summary": "סיכום",
+    "couponNumber": "מספר קופון",
+    "continue": "לְהַמשִׁיך"
+  },
+  "orderSummary": {
+    "title": "תשלום",
+    "payment": "סיכום",
+    "paymentMethod": "אופן תשלום",
+    "credit": "אשראי",
+    "note": "הערות לשליח",
+    "pickup": "איסוף עצמי",
+    "delivery": "משלוח הביתה",
+    "deliveryFee": "דמי משלוח",
+    "continue": "המשך",
+    "deliveryPrice": "משלוח",
+    "coupon": "קוד קופון",
+    "total": "סה\"כ לתשלום",
+    "invalidCoupon": "קוד קופון לא בתוקף",
+    "totalOrder": "סה\"כ הזמנה",
+    "cash": "מזומן",
+    "location_disabled_title": "המיקום מושבת",
+    "location_disabled_msg": "עליך לאפשר מיקום על מנת לבצע הזמנה!",
+    "location_disabled_open_setting_btn": "פתח הגדרות",
+    "open_setting_failed": "לא מצליח לפתוח הגדרות",
+    "choose_payment_method": "אנא בחר אמצעי תשלום",
+    "choose_delivery": "נא לבחור סוג משלוח."
+  },
+  "orders": {
+    "detail": "סיכום הזמנה",
+    "history": "הסטוריית הזמנות",
+    "extra": ":תוספות",
+    "title": "ההזמנה שלי",
+    "bookAgain": "הזמן שוב",
+    "conflict": "אינך יכול להזמין מחדש פריטים ממסעדה אחרת",
+    "conflictTitle": "העגלה אינה ריקה",
+    "minOrderTitle": "שגיאת קופה",
+    "minOrder": "מינימום הזמנה הוא {min} ש'ח",
+    "ok": "בסדר",
+    "blockUser": "המשתמש חסום",
+    "confirmTitle": "לְאַשֵׁר",
+    "confirmMessage": "בטוחים שרוצים להמשיך?"
+  },
+  "dialog": {
+    "remove_confirmation": "האם אתה רוצה לפנות את העגלה?",
+    "removed": "העגלה שלך הוסרה.",
+    "clear_cart_confirmation": "האם אתה רוצה לפנות את העגלה?"
+  }
+}
