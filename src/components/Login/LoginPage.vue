@@ -53,8 +53,10 @@ export default {
                 Password: md5(this.password),
                 CompanyId: this.selectedCompany.id
             }
+            this.$store.dispatch('application/setShowLoader', true)
             LoginApi.handleLogin(dataUser)
                 .then(res => {
+                    this.$store.dispatch('application/setShowLoader', false)
                     const infoUser = res.data.Data
                     if (infoUser && !_.isEmpty(infoUser)) {
                         this.showToast('Login Successfully', 'success')
@@ -64,6 +66,7 @@ export default {
                 })
                 .catch(() => {
                     this.showToast('Something went wrong. Please try again', 'error')
+                    this.$store.dispatch('application/setShowLoader', false)
                 })
         },
         showToast (message, type) {
