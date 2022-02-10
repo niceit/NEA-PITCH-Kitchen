@@ -81,7 +81,7 @@ export default {
                 this.listCompanyToSelect = companyList.map(el => {
                     return {
                         id: el.Id,
-                        label: el.Id
+                        label: el.Name
                     }
                 })
             })

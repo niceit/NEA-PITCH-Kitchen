@@ -15,7 +15,7 @@ const Api = {
         headers[name] = value
     },
     preparedHeaders () {
-        headers['Accept-Language'] = 'ar'
+        headers['Accept-Language'] = '1'
         return headers
     },
     init () {
