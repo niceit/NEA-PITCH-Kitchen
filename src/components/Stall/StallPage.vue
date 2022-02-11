@@ -1,112 +1,44 @@
 <template>
     <div>
         <div class="header-stall">
-            <div class="stall-title">Stall 1</div>
-            <div>
+            <div class="stall-title">Stall</div>
+            <div class="d-flex align-items-center">
                 <button @click="$router.push(PATH.FOOD)" class="btn btn-4 mr-2">Food Avaibility</button>
-                <button @click="signOut" class="btn btn-4 sign-out-button">
+                <button @click="signOut" class="btn btn-4 sign-out-button mr-2">
                     Sign Out      
                 </button>
+                <p class="mb-0 name-user">{{nameUser}}</p>
             </div>
         </div>
-        <div class="card-list">
+        <div v-if="listItemOrder.length" class="card-list">
             <div class="cards">
-                <div class="card">
-                    <div class="card-header">
-                        <p>Take away</p>
-                        <p>1001</p>
-                        <p>05:22</p>
+                <div v-for="item in listItemOrder" :key="item.Id" class="card">
+                    <div @click="selectItemOrder(item.Id)" class="card-header">
+                        <p>{{item.OrderStatus}}</p>
+                        <p>{{item.QueueNumber}}</p>
+                        <p>Total Price: {{item.TotalPrice}}</p>
                     </div>
                     <div class="card-content">
-                        <div class="card-top">
-                        <h3 class="card-title">
-                            x01 Wanton Mee
-                        </h3>
-                        <h3 class="card-title">
-                            x03 Wanton Soup
-                        </h3>
+                        <div @click="selectItemOrder(item.Id)" class="card-top">
+                            <h3 v-for="perAddOnItem in item.AddonItems" :key="perAddOnItem.Id" class="card-title">
+                                x{{perAddOnItem.Quantity}} {{perAddOnItem.AddonName ? perAddOnItem.AddonName : 'Empty Name'}}
+                            </h3>
+                            <h3 v-for="perFoodItem in item.FoodItems" :key="perFoodItem.Id" class="card-title">
+                                x{{perFoodItem.Quantity}} {{perFoodItem.FoodName ? perFoodItem.FoodName : 'Empty Name'}}
+                            </h3>
 
                         </div>
 
-                        <div class="card-header">
+                        <div @click="selectItemOrder(item.Id)" class="card-header">
                             <p>Order time</p>
-                            <p>13:00</p>
-                            <p>02/11/2022</p>
+                            <p>{{item.OrderDate}}</p>
                         </div>
 
                         <div class="card-bottom">
-                            <button class="button-live">
+                            <button @click="callQueueItem(item.Id)" class="button-live">
                                 Call Q
                             </button>
-                            <button class="button-live color-collected">
-                                Collected
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <p>Take away</p>
-                        <p>1001</p>
-                        <p>05:22</p>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-top">
-                        <h3 class="card-title">
-                            x01 Wanton Mee
-                        </h3>
-                        <h3 class="card-title">
-                            x03 Wanton Soup
-                        </h3>
-
-                        </div>
-
-                        <div class="card-header">
-                            <p>Order time</p>
-                            <p>13:00</p>
-                            <p>02/11/2022</p>
-                        </div>
-
-                        <div class="card-bottom">
-                            <button class="button-live">
-                                Call Q
-                            </button>
-                            <button class="button-live color-collected">
-                                Collected
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <p>Take away</p>
-                        <p>1001</p>
-                        <p>05:22</p>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-top">
-                        <h3 class="card-title">
-                            x01 Wanton Mee
-                        </h3>
-                        <h3 class="card-title">
-                            x03 Wanton Soup
-                        </h3>
-
-                        </div>
-
-                        <div class="card-header">
-                            <p>Order time</p>
-                            <p>13:00</p>
-                            <p>02/11/2022</p>
-                        </div>
-
-                        <div class="card-bottom">
-                            <button class="button-live">
-                                Call Q
-                            </button>
-                            <button class="button-live color-collected">
+                            <button @click="callCollectedOrder(item.Id)" class="button-live color-collected">
                                 Collected
                             </button>
                         </div>
@@ -114,23 +46,118 @@
                 </div>
             </div>
         </div>
+        <div class="empty-list" v-else>Empty List</div>
+        <DialogOrderInformation ref="DialogOrderInfor" :currentOrderItem="currentOrderItem"></DialogOrderInformation>
     </div>
 </template>
 
 <script>
 import {PATH} from '@/Api/const.js'
 import AppLocalStorage from '@/store/localstorage'
+import OrderListAPI from '@/Api/orderList.api.js'
+import Application from '@/utils/application.js'
+import DialogOrderInformation from '@/components/DialogOrderInformation/DialogOrderInformation.vue'
 export default {
     data() {
         return {
             PATH,
+            nameUser: '',
+            listItemOrder: [],
+            outletId: '',
+            currentOrderItem: {}
         }
     },
     methods: {
         signOut() {
             AppLocalStorage.removeTokenAndUserData()
             this.$router.push(this.PATH.LOGIN)
+        },
+        
+        getListItemOrder () {
+            var today = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+            this.$store.dispatch('application/setShowLoader', true)
+            OrderListAPI.getListOrder(this.outletId, today)
+                .then(res => {
+                    this.$store.dispatch('application/setShowLoader', false)
+                    const listItems = res.data.Data
+                    if (listItems && listItems.length) {
+                        this.listItemOrder = listItems
+                    }
+                })
+                .catch(() => {
+                    Application.showToasted('Something went wrong. Please try again', 'error')
+                    this.$store.dispatch('application/setShowLoader', false)
+                })
+        },
+
+        callQueueItem(orderId) {
+            const data = {
+                OrderId: orderId
+            }
+            this.$store.dispatch('application/setShowLoader', true)
+            OrderListAPI.callQueueNumber(data)
+                .then(res => {
+                    if (Application.isApiResponseSuccess(res.data)) {
+                        Application.showToasted('Order queue item successfully', 'success')
+                        this.$store.dispatch('application/setShowLoader', false)
+                        this.getListItemOrder()
+                    } else {
+                        Application.showToasted('Order queue item fail', 'error')
+                        this.$store.dispatch('application/setShowLoader', false)
+                    }
+                })
+                .catch(() => {
+                    Application.showToasted('Something went wrong. Please try again', 'error')
+                    this.$store.dispatch('application/setShowLoader', false)
+                })
+        },
+
+        callCollectedOrder (orderId) {
+            const data =  {
+                OrderId: orderId
+            }
+            this.$store.dispatch('application/setShowLoader', true)
+            OrderListAPI.callCollectedOrder(data)
+                .then(res => {
+                    if (Application.isApiResponseSuccess(res.data)) {
+                        Application.showToasted('Order collected item successfully', 'success')
+                        this.$store.dispatch('application/setShowLoader', false)
+                        this.getListItemOrder()
+                    } else {
+                        Application.showToasted('Order collected item fail', 'error')
+                        this.$store.dispatch('application/setShowLoader', false)
+                    }
+                })
+                .catch(() => {
+                    Application.showToasted('Something went wrong. Please try again', 'error')
+                    this.$store.dispatch('application/setShowLoader', false)
+                })
+        },
+
+        selectItemOrder (orderId) {
+            this.$store.dispatch('application/setShowLoader', true)
+            OrderListAPI.getOrderInformation(orderId)
+                .then(res => {
+                    if (Application.isApiResponseSuccess(res.data)) {
+                        this.$store.dispatch('application/setShowLoader', false)
+                        this.$refs.DialogOrderInfor.isOpened = true;
+                        this.currentOrderItem = res.data.Data
+                    }
+                })
+                .catch(() => {
+                    Application.showToasted('Something went wrong. Please try again', 'error')
+                    this.$store.dispatch('application/setShowLoader', false)
+                })
         }
+    },
+    mounted () {
+        const userData = AppLocalStorage.getUserData()
+        this.nameUser = userData.FullName
+        this.outletId = userData.OutletIds[0].OutletId
+        this.getListItemOrder()
+    },
+    components: {
+        DialogOrderInformation
     }
 };
 </script>
@@ -176,11 +203,14 @@ export default {
         border-radius: 20px;
         overflow: hidden;
         background-color: white;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         margin-left: 30px;
         display: flex;
         flex-direction: column;
         width: calc(calc(100% / var(--columns)) - var(--spacing));
+        margin-bottom: 20px;
+        &:hover {
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
     }
     .card-header {
         padding-top: 10px;
@@ -190,27 +220,28 @@ export default {
             font-weight: bold;
             font-size: 16px;
         }
+        cursor: pointer;
     }
 
     @media screen and (max-width: 767px) {
-    .cards {
-        --spacing: 15px;
-        --columns: 1;
-        margin-bottom: -10px;
-    }
-    .card {
-        margin-bottom: 10px;
-    }
+        .cards {
+            --spacing: 15px;
+            --columns: 1;
+            margin-bottom: -10px;
+        }
+        .card {
+            margin-bottom: 10px;
+        }
     }
     @media screen and (min-width: 768px) and (max-width: 1024px) {
-    .cards {
-        --spacing: 30px;
-        --columns: 2;
-        margin-bottom: -10px;
-    }
-    .card {
-        margin-bottom: 10px;
-    }
+        .cards {
+            --spacing: 30px;
+            --columns: 2;
+            margin-bottom: -10px;
+        }
+        .card {
+            margin-bottom: 10px;
+        }
     }
 
     .card-img {
@@ -224,6 +255,7 @@ export default {
         display: flex;
         flex-direction: column;
         flex: 1;
+        cursor: pointer;
     }
     .card-title {
         font-weight: 500;
@@ -236,7 +268,7 @@ export default {
         -webkit-box-orient: vertical;
     }
     .card-bottom {
-        padding: 25px;
+        padding: 5px 25px;
         border-top: 1px solid #eee;
         display: flex;
         justify-content: space-between;
@@ -279,5 +311,14 @@ export default {
         &:hover {
             background: none !important;
         }
+    }
+    .name-user {
+        font-weight: bold;
+    }
+    .empty-list {
+        display: flex;
+        justify-content: center;
+        font-size: 40px;
+        text-decoration: underline;
     }
 </style>

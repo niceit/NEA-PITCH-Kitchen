@@ -4,6 +4,7 @@ import VueAxios from 'vue-axios'
 import Configuration from '../Config/config'
 import * as AxiosLogger from 'axios-logger'
 import { ApiServiceError } from './api.error'
+import AppLocalStorage from '@/store/localstorage'
 
 const headers = {}
 
@@ -16,6 +17,7 @@ const Api = {
     },
     preparedHeaders () {
         headers['Accept-Language'] = '1'
+        headers['Authorization'] = AppLocalStorage.getUserToken()
         return headers
     },
     init () {
@@ -42,8 +44,8 @@ const Api = {
         })
     },
 
-    get (resource, slug = '') {
-        return Vue.axios.get(`${resource}/${slug}`).catch(error => {
+    get (resource) {
+        return Vue.axios.get(`${resource}`).catch(error => {
             throw ApiServiceError.fromApiError(error)
         })
     },

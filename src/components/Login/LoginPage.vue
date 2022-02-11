@@ -33,6 +33,7 @@
 import LoginApi from '@/Api/login.api.js'
 import { VueSelect } from 'vue-select'
 import AppLocalStorage from '@/store/localstorage'
+import Application from '@/utils/application.js'
 const md5 = require('md5');
 const _ = require('lodash');
 export default {
@@ -60,25 +61,18 @@ export default {
                         this.$store.dispatch('application/setShowLoader', false)
                         const infoUser = res.data.Data
                         if (infoUser && !_.isEmpty(infoUser)) {
-                            this.showToast('Login Successfully', 'success')
+                            Application.showToasted('Login Successfully', 'success')
                             AppLocalStorage.setUserToken(infoUser.Token, infoUser)
                             this.$router.push('/')
                         } else {
-                            this.showToast('Your login information is incorrect', 'error')
+                            Application.showToasted('Your login information is incorrect', 'error')
                         }
                     })
                     .catch(() => {
-                        this.showToast('Something went wrong. Please try again', 'error')
+                        Application.showToasted('Something went wrong. Please try again', 'error')
                         this.$store.dispatch('application/setShowLoader', false)
                     })
             }
-        },
-        showToast (message, type) {
-            this.$toasted.show(message, {
-                type,
-                position: 'top-right',
-                duration: 3000
-            })
         },
         getCompanyList () {
             this.$store.dispatch('application/setShowLoader', true)
