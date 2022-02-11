@@ -1,8 +1,13 @@
 <template>
     <div>
         <div class="header-stall">
-            <div>Stall 1</div>
-            <button @click="$router.push(PATH.FOOD)" class="btn btn-4">Food Avaibility</button>
+            <div class="stall-title">Stall 1</div>
+            <div>
+                <button @click="$router.push(PATH.FOOD)" class="btn btn-4 mr-2">Food Avaibility</button>
+                <button @click="signOut" class="btn btn-4 sign-out-button">
+                    Sign Out      
+                </button>
+            </div>
         </div>
         <div class="card-list">
             <div class="cards">
@@ -114,10 +119,17 @@
 
 <script>
 import {PATH} from '@/Api/const.js'
+import AppLocalStorage from '@/store/localstorage'
 export default {
     data() {
         return {
             PATH,
+        }
+    },
+    methods: {
+        signOut() {
+            AppLocalStorage.removeTokenAndUserData()
+            this.$router.push(this.PATH.LOGIN)
         }
     }
 };
@@ -129,7 +141,7 @@ export default {
         width: calc(100% - 40px);
         margin: 20px;
         justify-content: space-between;
-        div {
+        .stall-title {
             font-size: 25px;
             width: 200px;
             display: flex;
@@ -255,5 +267,17 @@ export default {
     }
     .color-collected {
         background: #24a058;
+    }
+    .mr-2 {
+        margin-right: 20px;
+    }
+    .sign-out-button {
+        background: rgb(192, 60, 60) !important;
+        transition: all 0.16s ease-in;
+        height: 40px;
+        color: #fff;
+        &:hover {
+            background: none !important;
+        }
     }
 </style>

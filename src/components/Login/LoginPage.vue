@@ -53,21 +53,25 @@ export default {
                 Password: md5(this.password),
                 CompanyId: this.selectedCompany.id
             }
-            this.$store.dispatch('application/setShowLoader', true)
-            LoginApi.handleLogin(dataUser)
-                .then(res => {
-                    this.$store.dispatch('application/setShowLoader', false)
-                    const infoUser = res.data.Data
-                    if (infoUser && !_.isEmpty(infoUser)) {
-                        this.showToast('Login Successfully', 'success')
-                        AppLocalStorage.setUserToken(infoUser.Token, infoUser)
-                        this.$router.push('/')
-                    }
-                })
-                .catch(() => {
-                    this.showToast('Something went wrong. Please try again', 'error')
-                    this.$store.dispatch('application/setShowLoader', false)
-                })
+            if (this.userName && this.password && this.selectedCompany.id) {
+                this.$store.dispatch('application/setShowLoader', true)
+                LoginApi.handleLogin(dataUser)
+                    .then(res => {
+                        this.$store.dispatch('application/setShowLoader', false)
+                        const infoUser = res.data.Data
+                        if (infoUser && !_.isEmpty(infoUser)) {
+                            this.showToast('Login Successfully', 'success')
+                            AppLocalStorage.setUserToken(infoUser.Token, infoUser)
+                            this.$router.push('/')
+                        } else {
+                            this.showToast('Your login information is incorrect', 'error')
+                        }
+                    })
+                    .catch(() => {
+                        this.showToast('Something went wrong. Please try again', 'error')
+                        this.$store.dispatch('application/setShowLoader', false)
+                    })
+            }
         },
         showToast (message, type) {
             this.$toasted.show(message, {
