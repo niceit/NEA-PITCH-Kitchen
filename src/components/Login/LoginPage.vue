@@ -1,114 +1,104 @@
 <template>
     <div class="login-page">
-        <div v-if="currentStatus === stringPhoneNumber" class="main-content-login">
-            <h2 class="title-number" v-text="$t('login.enterPhoneNumber')"></h2>
+        <div class="main-content-login">
+            <h2 class="title-number">Kitchen Order</h2>
             <input
-                @keypress="isNumber($event)"
-                v-model="phoneNumber"
-                :placeholder="$t('login.phoneNumberPlaceholder')"
+                v-model="userName"
+                :placeholder="'User Name'"
                 class="form-phone-number"
             />
-            <button :disabled="!phoneNumber" @click="sendVerificationCodeToPhoneNumber" class="button-verify" v-text="$t('login.verifyCode')"></button>
-        </div>
-        <div v-if="currentStatus === stringVerifyCode" class="main-content-login">
-            <h2 class="title-number" v-text="$t('login.enterVerifyCode')"></h2>
-            <CodeInput @complete="onCompleteCodeInput" :fields="4"></CodeInput>
-            <p class="receive-code-again" v-text="$t('login.resend')" @click="resendSmsCode"></p>
+            <div class="text-error" v-if="isClickedButton && !userName">User name is required</div>
+
+            <input
+                v-model="password"
+                :placeholder="'Password'"
+                class="form-phone-number"
+                type="password"
+            />
+            <div class="text-error" v-if="isClickedButton && !password">Password is required</div>
+
+            <div class="list-company">
+                <v-select :placeholder="'Select company'" 
+                    :options="listCompanyToSelect"
+                    v-model="selectedCompany">
+                </v-select>
+            </div>
+            <div class="text-error" v-if="isClickedButton && !selectedCompany">Company is required</div>
+            <button @click="login" class="button-verify">Login</button>
         </div>
     </div>
 </template>
 
 <script>
-import CodeInput from 'vue-verification-code-input'
 import LoginApi from '@/Api/login.api.js'
+import { VueSelect } from 'vue-select'
 import AppLocalStorage from '@/store/localstorage'
-import AppHelper from '@/utils/application'
-import Application from "@/utils/application";
+const md5 = require('md5');
+const _ = require('lodash');
 export default {
     data () {
         return {
-            phoneNumber: '',
-            currentStatus: 'phone-number',
-            stringPhoneNumber: 'phone-number',
-            stringVerifyCode: 'verify-code',
-            maxLength: 4
+            userName: '',
+            password: '',
+            isClickedButton: false,
+            selectedCompany: '',
+            listCompanyToSelect: []
         }
-    },
-    components: {
-        CodeInput
     },
     methods: {
-        isNumber (evt) {
-            const charCode = (evt.which) ? evt.which : evt.keyCode
-            if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
-                evt.preventDefault()
-            } else {
-                return true
+        login () {
+            this.isClickedButton = true
+            const dataUser = {
+                Username: this.userName,
+                Password: md5(this.password),
+                CompanyId: this.selectedCompany.id
+            }
+            if (this.userName && this.password && this.selectedCompany.id) {
+                this.$store.dispatch('application/setShowLoader', true)
+                LoginApi.handleLogin(dataUser)
+                    .then(res => {
+                        this.$store.dispatch('application/setShowLoader', false)
+                        const infoUser = res.data.Data
+                        if (infoUser && !_.isEmpty(infoUser)) {
+                            this.showToast('Login Successfully', 'success')
+                            AppLocalStorage.setUserToken(infoUser.Token, infoUser)
+                            this.$router.push('/')
+                        } else {
+                            this.showToast('Your login information is incorrect', 'error')
+                        }
+                    })
+                    .catch(() => {
+                        this.showToast('Something went wrong. Please try again', 'error')
+                        this.$store.dispatch('application/setShowLoader', false)
+                    })
             }
         },
-        sendVerificationCodeToPhoneNumber () {
-            this.$store.dispatch('application/setShowLoader', true)
-            LoginApi.sendSmsCode(this.phoneNumber)
-                .then(res => {
-                    if (res.data.message === 'success') {
-                        this.currentStatus = this.stringVerifyCode
-                    }
-                    this.$store.dispatch('application/setShowLoader', false)
-                })
-        },
-        handleVerifySmsCode (valueVerifySmsCode) {
-            this.$store.dispatch('application/setShowLoader', true)
-            LoginApi.verifySMSCode(this.phoneNumber, valueVerifySmsCode)
-                .then(res => {
-                    this.$store.dispatch('application/setShowLoader', false)
-                    if (AppHelper.isApiResponseSuccess(res.data)) {
-                        this.$store.dispatch('register/setAuthKeyFromVerifySMS', res.data.auth_key)
-                        if (!res.data.is_registered) {
-                            this.$store.dispatch('register/setPhoneNum', this.phoneNumber)
-                            this.$router.push('/register')
-                        } else {
-                            this._loginWithPhone()
-                        }
-                    } else {
-                        AppHelper.showApiError(this.$toasted, res.data)
-                    }
-                })
-        },
-        _loginWithPhone () {
-            this.$store.dispatch('application/setShowLoader', true)
-            LoginApi._loginWithPhone(this.$store.state.register.authKey).then(res => {
-                this.$store.dispatch('application/setShowLoader', false)
-                if (AppHelper.isApiResponseSuccess(res.data)) {
-                    AppLocalStorage.setUserToken(res.data.token, res.data)
-                    const afterLoginRoute = Application.getAfterLoginRouteAlias()
-                    this.$router.push(afterLoginRoute || '/')
-                } else {
-                    AppHelper.showApiError(this.$toasted, res.data)
-                }
+        showToast (message, type) {
+            this.$toasted.show(message, {
+                type,
+                position: 'top-right',
+                duration: 3000
             })
         },
-        onCompleteCodeInput (value) {
-            this.handleVerifySmsCode(value)
-        },
-        resendSmsCode () {
+        getCompanyList () {
             this.$store.dispatch('application/setShowLoader', true)
-            LoginApi.resendSmsCode(this.phoneNumber)
-                .then(res => {
-                    if (AppHelper.isApiResponseSuccess(res.data)) {
-                        AppHelper.showApiSuccess(this.$toasted, res.data)
-                    } else {
-                        AppHelper.showApiError(this.$toasted, res.data)
+            LoginApi.getCompanyList().then(res => {
+                this.$store.dispatch('application/setShowLoader', false)
+                const companyList = res.data.Data
+                this.listCompanyToSelect = companyList.map(el => {
+                    return {
+                        id: el.Id,
+                        label: el.Name
                     }
-                    this.$store.dispatch('application/setShowLoader', false)
                 })
+            })
         }
     },
-    watch: {
-        verifyCode (value) {
-            if (value.length === this.maxLength) {
-                this.handleVerifySmsCode(value)
-            }
-        }
+    mounted() {
+        this.getCompanyList();
+    },
+    components: {
+        VueSelect
     }
 }
 </script>
@@ -124,7 +114,6 @@ export default {
         .main-content-login {
             display: flex;
             flex-direction: column;
-            align-items: center;
             .title-number {
                 font-size: 30px !important;
                 letter-spacing: 2px;
@@ -133,10 +122,11 @@ export default {
                 margin-top: 10%;
                 border: 1px solid #fff;
                 box-sizing: border-box;
-                border-radius: 40px;
+                border-radius: 4px;
                 width: 400px;
-                height: 56px;
-                padding-right: 20px;
+                height: 50px;
+                padding-left: 20px;
+                border: 1px solid rgba(60,60,60,.26);
             }
             .button-verify {
                 margin-top: 20px;
@@ -162,6 +152,17 @@ export default {
                 color: #6C6E6F;
                 text-decoration: underline;
             }
+        }
+        .text-error {
+            color: red;
+            font-size: 14px;
+            padding-top: 10px;
+            margin-bottom: 0px;
+            width: 100%;
+            display: flex;
+        }
+        .list-company {
+            margin-top: 10%;
         }
     }
 </style>

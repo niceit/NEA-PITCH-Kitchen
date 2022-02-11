@@ -1433,3 +1433,15 @@ input[type=number] {
     z-index: 100;
     bottom: 0;
 }
+
+/* css for vue select */
+#content UL {
+    margin-left: 0px !important;
+}
+.vs--searchable .vs__dropdown-toggle {
+    height: 50px;
+    background: #fff;
+}
+.vs__search::placeholder {
+    color: #CDCDCD !important;
+}

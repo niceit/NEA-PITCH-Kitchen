@@ -1,35 +1,12 @@
 import Api from './api'
+import {API_PATH} from './const'
 
 const LoginApi = {
-    sendSmsCode (phoneNumber) {
-        return Api.post('', {
-            request: 'send_sms_code',
-            phone_num: phoneNumber,
-            country_code: '',
-            is_client: true
-        })
+    getCompanyList () {
+        return Api.get(API_PATH.GET_COMPANY_LIST)
     },
-    resendSmsCode (phoneNumber) {
-        return Api.post('', {
-            request: 'resend_sms_code',
-            phone_num: phoneNumber,
-            is_client: true
-        })
-    },
-    verifySMSCode (phoneNumber, verificationCode) {
-        return Api.post('', {
-            request: 'verify_sms_code',
-            phone_num: phoneNumber,
-            country_code: '',
-            is_client: true,
-            verification_code: verificationCode
-        })
-    },
-    _loginWithPhone (authKey) {
-        return Api.post('', {
-            request: 'login_with_phone',
-            auth_key: authKey
-        })
+    handleLogin (data) {
+        return Api.post(API_PATH.GET_USER_INFORMATION, data)
     }
 }
 export default LoginApi
