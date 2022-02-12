@@ -5,69 +5,29 @@
         </div>
         <div class="card-list">
             <div class="cards">
-                <div class="card">
+                <div v-for="perFood in listFood" :key="perFood.Id" class="card">
                     <div class="card-top">
                         <h3 class="card-title">
-                            Food Name
+                            {{perFood.Name}}
                         </h3>
                     </div>
-                    <img
-                        class="card-img"
-                        src="https://i.pinimg.com/564x/fa/e3/50/fae3500cc623c6b6051f33ef2dda9205.jpg"
-                    />
-
                     <div class="card-content">
-                        <div class="card-bottom">
-                            <button class="button-live">
-                                Available
-                            </button>
-                            <button class="button-live color-collected">
-                                Sold
-                            </button>
+                        <div v-if="perFood.Images && perFood.Images.length">
+                            <img
+                                v-for="(image, index) in perFood.Images" :key="index"
+                                class="card-img"
+                                :src="image"
+                                alt="img"
+                            />
                         </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-top">
-                        <h3 class="card-title">
-                            Food Name
-                        </h3>
-                    </div>
-                    <img
-                        class="card-img"
-                        src="https://i.pinimg.com/564x/fa/e3/50/fae3500cc623c6b6051f33ef2dda9205.jpg"
-                    />
-
-                    <div class="card-content">
-                        <div class="card-bottom">
-                            <button class="button-live">
-                                Available
-                            </button>
-                            <button class="button-live color-collected">
-                                Sold
-                            </button>
+                        <div v-else class="no-image">
+                            No Image
                         </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-top">
-                        <h3 class="card-title">
-                            Food Name
-                        </h3>
-                    </div>
-                    <img
-                        class="card-img"
-                        src="https://i.pinimg.com/564x/fa/e3/50/fae3500cc623c6b6051f33ef2dda9205.jpg"
-                    />
-
-                    <div class="card-content">
                         <div class="card-bottom">
-                            <button class="button-live">
+                            <button @click="updateFoodIsAllowOrdered(perFood.Id)" class="button-live">
                                 Available
                             </button>
-                            <button class="button-live color-collected">
+                            <button @click="updateFoodSoldOut(perFood.Id)" class="button-live color-collected">
                                 Sold
                             </button>
                         </div>
@@ -79,7 +39,75 @@
 </template>
 
 <script>
-export default {};
+import AppLocalStorage from '@/store/localstorage'
+import Application from '@/utils/application.js'
+import FoodAvaibilityAPI from '@/Api/foodAvaibility.api.js'
+export default {
+    data () {
+        return {
+            listFood: []
+        }
+    },
+    methods: {
+        getListFood () {
+            const userData = AppLocalStorage.getUserData()
+            const outletId = userData.OutletIds[0].OutletId
+            this.$store.dispatch('application/setShowLoader', true)
+            FoodAvaibilityAPI.getListFood(outletId)
+                .then(res => {
+                    if (Application.isApiResponseSuccess(res.data)) {
+                        this.$store.dispatch('application/setShowLoader', false)
+                        this.listFood = res.data.Data
+                    }
+                })
+                .catch(() => {
+                    Application.showToasted('Something went wrong. Please try again', 'error')
+                    this.$store.dispatch('application/setShowLoader', false)
+                })
+        },
+
+        updateFoodIsAllowOrdered (foodId) {
+            this.$store.dispatch('application/setShowLoader', true)
+            FoodAvaibilityAPI.updateFoodItem(foodId)
+                .then(res => {
+                    if (Application.isApiResponseSuccess(res.data)) {
+                        Application.showToasted('Update food item successfully', 'success')
+                        this.$store.dispatch('application/setShowLoader', false)
+                        this.getListFood()
+                    } else {
+                        Application.showToasted('Update food item fail', 'error')
+                        this.$store.dispatch('application/setShowLoader', false)
+                    }
+                })
+                .catch(() => {
+                    Application.showToasted('Something went wrong. Please try again', 'error')
+                    this.$store.dispatch('application/setShowLoader', false)
+                })
+        },
+
+        updateFoodSoldOut (foodId) {
+            this.$store.dispatch('application/setShowLoader', true)
+            FoodAvaibilityAPI.updateFoodSoldOutAvailable(foodId)
+                .then(res => {
+                    if (Application.isApiResponseSuccess(res.data)) {
+                        Application.showToasted('Update food sold out available successfully', 'success')
+                        this.$store.dispatch('application/setShowLoader', false)
+                        this.getListFood()
+                    } else {
+                        Application.showToasted('Update food sold out available', 'error')
+                        this.$store.dispatch('application/setShowLoader', false)
+                    }
+                })
+                .catch(() => {
+                    Application.showToasted('Something went wrong. Please try again', 'error')
+                    this.$store.dispatch('application/setShowLoader', false)
+                })
+        }
+    },
+    mounted () {
+        this.getListFood()
+    }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -165,7 +193,7 @@ export default {};
         -webkit-box-orient: vertical;
     }
     .card-bottom {
-        padding: 25px;
+        padding: 10px 25px;
         border-top: 1px solid #eee;
         display: flex;
         justify-content: space-between;
@@ -201,5 +229,16 @@ export default {};
     }
     .color-collected {
         background: #24a058;
+    }
+    .no-image {
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        font-style: italic;
+        width: 100%;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
     }
 </style>
