@@ -35,6 +35,9 @@ const Application = {
     isApiResponseSuccess (responseData) {
         return responseData.StatusResult.Messages === 'Success'
     },
+    isApiHasTokenExpired (responseData) {
+        return responseData.StatusResult.Messages === 'Token is incorrect'
+    },
     showPriceWithCurrency (price) {
         return AppLocalStorage.getCurrentLocale() === 'en' ? `${price}₪` : `₪${price}`
     },

@@ -5,7 +5,7 @@
             <div class="d-flex align-items-center">
                 <button @click="$router.push(PATH.FOOD)" class="btn btn-4 mr-2">Food Avaibility</button>
                 <button @click="signOut" class="btn btn-4 sign-out-button mr-2">
-                    Sign Out      
+                    Sign Out
                 </button>
                 <p class="mb-0 name-user">{{nameUser}}</p>
             </div>
@@ -52,13 +52,13 @@
 </template>
 
 <script>
-import {PATH} from '@/Api/const.js'
+import { PATH } from '@/Api/const.js'
 import AppLocalStorage from '@/store/localstorage'
 import OrderListAPI from '@/Api/orderList.api.js'
 import Application from '@/utils/application.js'
 import DialogOrderInformation from '@/components/DialogOrderInformation/DialogOrderInformation.vue'
 export default {
-    data() {
+    data () {
         return {
             PATH,
             nameUser: '',
@@ -68,13 +68,13 @@ export default {
         }
     },
     methods: {
-        signOut() {
+        signOut () {
             AppLocalStorage.removeTokenAndUserData()
             this.$router.push(this.PATH.LOGIN)
         },
-        
+
         getListItemOrder () {
-            var today = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+            var today = new Date().toJSON().slice(0, 10).replace(/-/g, '/')
             this.$store.dispatch('application/setShowLoader', true)
             OrderListAPI.getListOrder(this.outletId, today)
                 .then(res => {
@@ -90,7 +90,7 @@ export default {
                 })
         },
 
-        callQueueItem(orderId) {
+        callQueueItem (orderId) {
             const data = {
                 OrderId: orderId
             }
@@ -113,7 +113,7 @@ export default {
         },
 
         callCollectedOrder (orderId) {
-            const data =  {
+            const data = {
                 OrderId: orderId
             }
             this.$store.dispatch('application/setShowLoader', true)
@@ -140,7 +140,7 @@ export default {
                 .then(res => {
                     if (Application.isApiResponseSuccess(res.data)) {
                         this.$store.dispatch('application/setShowLoader', false)
-                        this.$refs.DialogOrderInfor.isOpened = true;
+                        this.$refs.DialogOrderInfor.isOpened = true
                         this.currentOrderItem = res.data.Data
                     }
                 })
@@ -159,7 +159,7 @@ export default {
     components: {
         DialogOrderInformation
     }
-};
+}
 </script>
 
 <style lang="scss" scoped>

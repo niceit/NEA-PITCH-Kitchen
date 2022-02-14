@@ -11,8 +11,7 @@ import VueI18n from 'vue-i18n'
 import BootstrapVue from 'bootstrap-vue'
 import { constants } from './constants'
 import { VueSelect } from 'vue-select'
-import 'vue-select/dist/vue-select.css';
-
+import 'vue-select/dist/vue-select.css'
 
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css'

@@ -1,5 +1,5 @@
 import Api from './api'
-import {API_PATH} from './const'
+import { API_PATH } from './const'
 
 const FoodAvaibilityAPI = {
     getListFood (outletId) {
@@ -17,7 +17,7 @@ const FoodAvaibilityAPI = {
             Id: id,
             IsAllowOrder: false
         }
-        return Api.post(API_PATH.FOOD_SOLD_OUT_AVAILABLE, data)
+        return Api.post(API_PATH.UPDATE_FOOD_ITEM, data)
     }
 }
 export default FoodAvaibilityAPI

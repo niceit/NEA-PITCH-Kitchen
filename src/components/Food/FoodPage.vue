@@ -71,11 +71,11 @@ export default {
             FoodAvaibilityAPI.updateFoodItem(foodId)
                 .then(res => {
                     if (Application.isApiResponseSuccess(res.data)) {
-                        Application.showToasted('Update food item successfully', 'success')
+                        Application.showToasted('Update food available successfully', 'success')
                         this.$store.dispatch('application/setShowLoader', false)
                         this.getListFood()
                     } else {
-                        Application.showToasted('Update food item fail', 'error')
+                        Application.showToasted('Update food available fail', 'error')
                         this.$store.dispatch('application/setShowLoader', false)
                     }
                 })
@@ -90,11 +90,11 @@ export default {
             FoodAvaibilityAPI.updateFoodSoldOutAvailable(foodId)
                 .then(res => {
                     if (Application.isApiResponseSuccess(res.data)) {
-                        Application.showToasted('Update food sold out available successfully', 'success')
+                        Application.showToasted('Update food sold out successfully', 'success')
                         this.$store.dispatch('application/setShowLoader', false)
                         this.getListFood()
                     } else {
-                        Application.showToasted('Update food sold out available', 'error')
+                        Application.showToasted('Update food sold out fail', 'error')
                         this.$store.dispatch('application/setShowLoader', false)
                     }
                 })
@@ -107,7 +107,7 @@ export default {
     mounted () {
         this.getListFood()
     }
-};
+}
 </script>
 
 <style lang="scss" scoped>

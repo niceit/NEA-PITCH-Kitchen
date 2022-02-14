@@ -8,8 +8,7 @@ export const API_PATH = {
     CALL_COLLECTED_ORDER: 'CallCollectedOrder',
     GET_ORDER_INFORMATION: (orderId) => `GetOrderInformation?orderId=${orderId}`,
     GET_FOOD_LIST: (outletId) => `GetFoodList?OutletId=${outletId}`,
-    UPDATE_FOOD_ITEM: 'UpdateFoodItem',
-    FOOD_SOLD_OUT_AVAILABLE: 'food_soldoutavalible'
+    UPDATE_FOOD_ITEM: 'UpdateFoodItem'
 }
 
 export const PATH = {
