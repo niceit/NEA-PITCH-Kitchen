@@ -1,4 +1,5 @@
 import AppLocalStorage from '@/store/localstorage'
+import Vue from 'vue'
 
 const Application = {
     _afterLoginRouteAlias: '',
@@ -32,10 +33,17 @@ const Application = {
         })
     },
     isApiResponseSuccess (responseData) {
-        return responseData && parseInt(responseData.rc) === 0
+        return responseData.StatusResult.Messages === 'Success'
     },
     showPriceWithCurrency (price) {
         return AppLocalStorage.getCurrentLocale() === 'en' ? `${price}₪` : `₪${price}`
+    },
+    showToasted (message, type) {
+        Vue.toasted.show(message, {
+            type,
+            position: 'top-right',
+            duration: 3000
+        })
     }
 }
 
