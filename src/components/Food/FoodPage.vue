@@ -1,6 +1,9 @@
 <template>
     <div>
         <div class="header-stall">
+          <button @click="goBack" class="btn btn-4 sign-out-button mr-2">
+              Back
+          </button>
             <div>Food Avaibility</div>
         </div>
         <div class="card-list">
@@ -45,14 +48,18 @@ import FoodAvaibilityAPI from '@/Api/foodAvaibility.api.js'
 export default {
     data () {
         return {
+            intervalRefresh: null,
             listFood: []
         }
     },
     methods: {
+        goBack () {
+            this.$router.push('/')
+        },
         getListFood () {
             const userData = AppLocalStorage.getUserData()
             const outletId = userData.OutletIds[0].OutletId
-            this.$store.dispatch('application/setShowLoader', true)
+            // this.$store.dispatch('application/setShowLoader', true)
             FoodAvaibilityAPI.getListFood(outletId)
                 .then(res => {
                     if (Application.isApiResponseSuccess(res.data)) {
@@ -106,6 +113,9 @@ export default {
     },
     mounted () {
         this.getListFood()
+        this.intervalRefresh = setInterval(() => {
+            this.getListFood()
+        }, 10000)
     }
 }
 </script>

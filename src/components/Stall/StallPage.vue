@@ -60,6 +60,7 @@ import DialogOrderInformation from '@/components/DialogOrderInformation/DialogOr
 export default {
     data () {
         return {
+            intervalRefresh: null,
             PATH,
             nameUser: '',
             listItemOrder: [],
@@ -75,7 +76,7 @@ export default {
 
         getListItemOrder () {
             var today = new Date().toJSON().slice(0, 10).replace(/-/g, '/')
-            this.$store.dispatch('application/setShowLoader', true)
+            // this.$store.dispatch('application/setShowLoader', true)
             OrderListAPI.getListOrder(this.outletId, today)
                 .then(res => {
                     this.$store.dispatch('application/setShowLoader', false)
@@ -155,6 +156,10 @@ export default {
         this.nameUser = userData.FullName
         this.outletId = userData.OutletIds[0].OutletId
         this.getListItemOrder()
+        this.intervalRefresh = setInterval(() => {
+            this.getListItemOrder()
+        }, 10000)
+
     },
     components: {
         DialogOrderInformation
