@@ -14,10 +14,10 @@ export const register = {
 
     },
     mutations: {
-        setAuthKey(state, payload) {
+        setAuthKey (state, payload) {
             state.authKey = payload
         },
-        setPhoneNum(state, payload) {
+        setPhoneNum (state, payload) {
             state.phoneNum = payload
         }
     }

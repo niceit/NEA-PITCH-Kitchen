@@ -6,11 +6,11 @@ export const header = {
     actions: {
         updateDataHeader: (context, payload) => {
             context.commit('setDataHeader', payload)
-        },
+        }
 
     },
     mutations: {
-        setDataHeader(state, payload) {
+        setDataHeader (state, payload) {
             state.dataHeader = payload
         }
     }

@@ -18,10 +18,10 @@
             <div class="text-error" v-if="isClickedButton && !password">Password is required</div>
 
             <div class="list-company">
-                <v-select :placeholder="'Select company'" 
+                <VueSelect :placeholder="'Select company'"
                     :options="listCompanyToSelect"
                     v-model="selectedCompany">
-                </v-select>
+                </VueSelect>
             </div>
             <div class="text-error" v-if="isClickedButton && !selectedCompany">Company is required</div>
             <button @click="login" class="button-verify">Login</button>
@@ -34,8 +34,8 @@ import LoginApi from '@/Api/login.api.js'
 import { VueSelect } from 'vue-select'
 import AppLocalStorage from '@/store/localstorage'
 import Application from '@/utils/application.js'
-const md5 = require('md5');
-const _ = require('lodash');
+const md5 = require('md5')
+const _ = require('lodash')
 export default {
     data () {
         return {
@@ -88,8 +88,8 @@ export default {
             })
         }
     },
-    mounted() {
-        this.getCompanyList();
+    mounted () {
+        this.getCompanyList()
     },
     components: {
         VueSelect

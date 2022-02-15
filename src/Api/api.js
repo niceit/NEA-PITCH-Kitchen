@@ -5,6 +5,9 @@ import Configuration from '../Config/config'
 import * as AxiosLogger from 'axios-logger'
 import { ApiServiceError } from './api.error'
 import AppLocalStorage from '@/store/localstorage'
+import Application from '@/utils/application.js'
+import { PATH } from '@/Api/const.js'
+import router from '@/router.js'
 
 const headers = {}
 
@@ -17,7 +20,7 @@ const Api = {
     },
     preparedHeaders () {
         headers['Accept-Language'] = '1'
-        headers['Authorization'] = AppLocalStorage.getUserToken()
+        headers.Authorization = AppLocalStorage.getUserToken()
         return headers
     },
     init () {
@@ -45,15 +48,31 @@ const Api = {
     },
 
     get (resource) {
-        return Vue.axios.get(`${resource}`).catch(error => {
-            throw ApiServiceError.fromApiError(error)
-        })
+        return Vue.axios.get(`${resource}`)
+            .then(res => {
+                if (Application.isApiHasTokenExpired(res.data)) {
+                    AppLocalStorage.removeTokenAndUserData()
+                    router.push(PATH.LOGIN)
+                    return false
+                }
+                return res
+            }).catch(error => {
+                throw ApiServiceError.fromApiError(error)
+            })
     },
 
     post (resource, params) {
-        return Vue.axios.post(`${resource}`, params).catch(error => {
-            throw ApiServiceError.fromApiError(error)
-        })
+        return Vue.axios.post(`${resource}`, params)
+            .then(res => {
+                if (Application.isApiHasTokenExpired(res.data)) {
+                    AppLocalStorage.removeTokenAndUserData()
+                    router.push(PATH.LOGIN)
+                    return false
+                }
+                return res
+            }).catch(error => {
+                throw ApiServiceError.fromApiError(error)
+            })
     },
 
     update (resource, slug, params) {

@@ -1,5 +1,5 @@
 import Api from './api'
-import {API_PATH} from './const'
+import { API_PATH } from './const'
 
 const LoginApi = {
     getCompanyList () {

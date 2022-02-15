@@ -4,7 +4,7 @@ import AppLocalStorage from '@/store/localstorage'
 import LoginPage from '@/components/Login/LoginPage'
 import StallPage from '@/components/Stall/StallPage.vue'
 import FoodPage from '@/components/Food/FoodPage.vue'
-import {PATH} from '@/Api/const.js'
+import { PATH } from '@/Api/const.js'
 
 Vue.use(Router)
 const routes = [
@@ -31,7 +31,7 @@ const routes = [
             requiresAuth: true,
             showHeader: false
         }
-    },
+    }
 ]
 
 const router = new Router({

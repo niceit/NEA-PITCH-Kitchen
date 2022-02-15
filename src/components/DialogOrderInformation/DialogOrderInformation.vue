@@ -40,12 +40,12 @@ export default {
     props: ['currentOrderItem'],
     data () {
         return {
-            isOpened: false,
+            isOpened: false
         }
     },
     methods: {
         closeModalInformation () {
-            this.isOpened = false;
+            this.isOpened = false
         }
     }
 }
