@@ -159,7 +159,6 @@ export default {
         this.intervalRefresh = setInterval(() => {
             this.getListItemOrder()
         }, 10000)
-
     },
     components: {
         DialogOrderInformation
