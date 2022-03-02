@@ -2,7 +2,7 @@ export const API_PATH = {
     GET_COMPANY_LIST: 'GetCompanyList',
     GET_USER_INFORMATION: 'GetUserInformation',
     CALL_ORDER_LIST: (outletId, orderDate) => {
-        return `CallOrderList?outletId=${outletId}&orderDate=${orderDate}`
+        return `CallOrderList?outletId=${outletId}&orderDate=${orderDate}&status=View,Ready,Collected`
     },
     CALL_QUEUE_NUMBER: 'CallQueueNumber',
     CALL_COLLECTED_ORDER: 'CallCollectedOrder',
