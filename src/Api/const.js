@@ -7,7 +7,8 @@ export const API_PATH = {
     CALL_QUEUE_NUMBER: 'CallQueueNumber',
     CALL_COLLECTED_ORDER: 'CallCollectedOrder',
     GET_ORDER_INFORMATION: (orderId) => `GetOrderInformation?orderId=${orderId}`,
-    GET_FOOD_LIST: (outletId) => `GetFoodList?OutletId=${outletId}`,
+    GET_FOOD_CATEGORIES: (outletId) => `GetFoodCategoryList?OutletId=${outletId}`,
+    GET_FOOD_LIST: (categoryId, outletId) => `GetFoodList?OutletId=${outletId}&CategoryId=${categoryId}`,
     UPDATE_FOOD_ITEM: 'UpdateFoodItem'
 }
 

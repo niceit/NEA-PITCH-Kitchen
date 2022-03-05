@@ -2,8 +2,11 @@ import Api from './api'
 import { API_PATH } from './const'
 
 const FoodAvaibilityAPI = {
-    getListFood (outletId) {
-        return Api.get(API_PATH.GET_FOOD_LIST(outletId))
+    async getFoodCategories (outletId) {
+        return await Api.get(API_PATH.GET_FOOD_CATEGORIES(outletId))
+    },
+    async getListFood (categoryId, outletId) {
+        return await Api.get(API_PATH.GET_FOOD_LIST(categoryId, outletId))
     },
     updateFoodItem (id) {
         const data = {

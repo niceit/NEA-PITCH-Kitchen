@@ -49,22 +49,65 @@ export default {
     data () {
         return {
             intervalRefresh: null,
+            isInApiRequest: false,
+            categories: [],
             listFood: []
+        }
+    },
+    watch: {
+        categories (items) {
+            if (items.length) {
+                items.forEach(item => {
+                    this.getListFood(item.Id)
+                })
+            } else {
+                this.listFood = []
+            }
         }
     },
     methods: {
         goBack () {
             this.$router.push('/')
         },
-        getListFood () {
+        getFoodCategories () {
+            if (this.isInApiRequest) {
+                return false
+            }
+
             const userData = AppLocalStorage.getUserData()
             const outletId = userData.OutletIds[0].OutletId
-            // this.$store.dispatch('application/setShowLoader', true)
-            FoodAvaibilityAPI.getListFood(outletId)
+            this.$store.dispatch('application/setShowLoader', true)
+            this.isInApiRequest = true
+            FoodAvaibilityAPI.getFoodCategories(outletId)
                 .then(res => {
                     if (Application.isApiResponseSuccess(res.data)) {
                         this.$store.dispatch('application/setShowLoader', false)
-                        this.listFood = res.data.Data
+                        this.listFood = []
+                        this.categories = res.data.Data
+                    }
+                    this.isInApiRequest = false
+                })
+                .catch(() => {
+                    Application.showToasted('Something went wrong. Please try again', 'error')
+                    this.$store.dispatch('application/setShowLoader', false)
+                    this.isInApiRequest = false
+                })
+        },
+        getListFood (categoryId) {
+            const userData = AppLocalStorage.getUserData()
+            const outletId = userData.OutletIds[0].OutletId
+            FoodAvaibilityAPI.getListFood(categoryId, outletId)
+                .then(res => {
+                    if (Application.isApiResponseSuccess(res.data)) {
+                        this.$store.dispatch('application/setShowLoader', false)
+                        const foods = res.data.Data
+                        if (foods.length) {
+                            foods.forEach(food => {
+                                if (typeof this.listFood.find(addedItem => addedItem.Id === food.Id) === 'undefined') {
+                                    this.listFood.push(food)
+                                }
+                            })
+                        }
                     }
                 })
                 .catch(() => {
@@ -112,9 +155,9 @@ export default {
         }
     },
     mounted () {
-        this.getListFood()
+        this.getFoodCategories()
         this.intervalRefresh = setInterval(() => {
-            this.getListFood()
+            this.getFoodCategories()
         }, 10000)
     }
 }
@@ -154,6 +197,7 @@ export default {
         background-color: white;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         margin-left: 30px;
+        margin-bottom: 30px;
         display: flex;
         flex-direction: column;
         width: calc(calc(100% / var(--columns)) - var(--spacing));
